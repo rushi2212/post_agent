@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from google import genai
+import google.generativeai as genai
 import requests
 import os
 
