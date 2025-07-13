@@ -2,7 +2,6 @@ from flask import Flask, render_template, request
 import google.generativeai as genai
 import requests
 import os
-
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -13,17 +12,14 @@ app = Flask(__name__)
 tavily_api_key = os.getenv("TAVILY_API_KEY")
 gemini_api_key = os.getenv("GEMINI_API_KEY")
 
-# Initialize Gemini client
-genai_client = genai.Client(api_key=gemini_api_key)
+# ✅ Configure Gemini API
+genai.configure(api_key=gemini_api_key)
 
 # Tavily Web Search
-import requests
-import os
-
 def web_search(question):
     trimmed_query = question[:400]  # Tavily's query limit
     headers = {
-        "Authorization": f"Bearer {os.getenv('TAVILY_API_KEY')}",
+        "Authorization": f"Bearer {tavily_api_key}",
         "Content-Type": "application/json"
     }
     payload = {
@@ -37,15 +33,12 @@ def web_search(question):
         content += r.get('content', '')
     return content
 
-
 # Summarizing with Gemini
 def summarizing_agent(user_query):
     content = web_search(user_query)
     prompt = f"Summarize the research in 5 bullet points:\n{content}"
-    response = genai_client.models.generate_content(
-        model="gemini-2.5-flash",
-        contents=prompt  # ✅ FIXED: plain string
-    )
+    model = genai.GenerativeModel(model_name="gemini-2.5-flash")
+    response = model.generate_content(prompt)
     return response.text
 
 # Facebook Post Generator
@@ -58,10 +51,8 @@ def facebook_agent(summary):
     Summary:
     {summary}
     """
-    response = genai_client.models.generate_content(
-        model="gemini-2.5-flash",
-        contents=prompt  # ✅ plain string
-    )
+    model = genai.GenerativeModel(model_name="gemini-2.5-flash")
+    response = model.generate_content(prompt)
     return response.text
 
 # LinkedIn Post Generator
@@ -76,10 +67,8 @@ def linkedin_agent(summary):
     Summary:
     {summary}
     """
-    response = genai_client.models.generate_content(
-        model="gemini-2.5-flash",
-        contents=prompt  # ✅ plain string
-    )
+    model = genai.GenerativeModel(model_name="gemini-2.5-flash")
+    response = model.generate_content(prompt)
     return response.text
 
 # Twitter/X Post Generator
@@ -92,10 +81,8 @@ def twitter_agent(summary):
     Summary:
     {summary}
     """
-    response = genai_client.models.generate_content(
-        model="gemini-2.5-flash",
-        contents=prompt  # ✅ plain string
-    )
+    model = genai.GenerativeModel(model_name="gemini-2.5-flash")
+    response = model.generate_content(prompt)
     return response.text
 
 # Flask route
