@@ -1,1 +1,13 @@
+# Ignore environment variable files
 .env
+
+# Python
+__pycache__/
+*.pyc
+
+# Flask debug files
+instance/
+*.db
+
+# VSCode
+.vscode/
