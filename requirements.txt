@@ -1,0 +1,4 @@
+flask
+tavily
+google-generativeai
+python-dotenv  

@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PostCraft Pro - AI-Powered Social Media Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --error-color: #ef4444;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --text-light: #9ca3af;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #f1f5f9;
+            --border-color: #e5e7eb;
+            --border-light: #f3f4f6;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.1);
+            --border-radius: 12px;
+            --border-radius-lg: 16px;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .navbar {
+            background: var(--bg-primary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .nav-badge {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .hero-section {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: var(--bg-primary);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border-light);
+            text-align: center;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: block;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .generator-section {
+            background: var(--bg-primary);
+            border-radius: var(--border-radius-lg);
+            padding: 2.5rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-light);
+            margin-bottom: 3rem;
+        }
+
+        .section-header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-description {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: var(--text-light);
+        }
+
+        .generate-button {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            padding: 1.25rem 2rem;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .generate-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+        }
+
+        .generate-button:active {
+            transform: translateY(0);
+        }
+
+        .generate-button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .results-container {
+            display: grid;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .result-card {
+            background: var(--bg-primary);
+            border-radius: var(--border-radius-lg);
+            padding: 2rem;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+        }
+
+        .result-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .result-card.summary {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border-color: #f59e0b;
+        }
+
+        .result-card.facebook {
+            border-left: 4px solid #1877f2;
+        }
+
+        .result-card.linkedin {
+            border-left: 4px solid #0077b5;
+        }
+
+        .result-card.twitter {
+            border-left: 4px solid #1da1f2;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .card-title-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: white;
+        }
+
+        .facebook .card-icon {
+            background: #1877f2;
+        }
+
+        .linkedin .card-icon {
+            background: #0077b5;
+        }
+
+        .twitter .card-icon {
+            background: #1da1f2;
+        }
+
+        .summary .card-icon {
+            background: #f59e0b;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .card-content {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .copy-button {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--border-radius);
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-primary);
+            flex: 1;
+        }
+
+        .copy-button:hover {
+            background: var(--bg-secondary);
+            border-color: var(--primary-color);
+        }
+
+        .copy-button.success {
+            background: var(--success-color);
+            color: white;
+            border-color: var(--success-color);
+        }
+
+        .loading-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-secondary);
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border-color);
+            border-top: 3px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-light);
+            margin-top: 3rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 2rem 1rem;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .generator-section {
+                padding: 1.5rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .card-actions {
+                flex-direction: column;
+            }
+
+            .navbar-container {
+                padding: 0 1rem;
+            }
+
+            .nav-badge {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="logo">
+                <div class="logo-icon">P</div>
+                <span class="logo-text">PostCraft Pro</span>
+            </div>
+            <div class="nav-badge">AI-Powered</div>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <div class="hero-section">
+            <h1 class="hero-title">Professional Post Generator</h1>
+            <p class="hero-subtitle">
+                Create engaging, platform-optimized social media content with AI-powered precision. 
+                Generate posts for Facebook, LinkedIn, and Twitter in seconds.
+            </p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-number">50K+</span>
+                <span class="stat-label">Posts Generated</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">3</span>
+                <span class="stat-label">Platforms Supported</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">15s</span>
+                <span class="stat-label">Average Generation Time</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">99.9%</span>
+                <span class="stat-label">Uptime</span>
+            </div>
+        </div>
+
+        <div class="generator-section">
+            <div class="section-header">
+                <h2 class="section-title">Generate Your Content</h2>
+                <p class="section-description">Enter your topic or content idea and let our AI create optimized posts for multiple platforms</p>
+            </div>
+
+            <div class="form-container">
+                <form method="POST" id="contentForm">
+                    <div class="form-group">
+                        <label for="query" class="form-label">Content Topic or Idea</label>
+                        <input 
+                            type="text" 
+                            id="query"
+                            name="query" 
+                            class="form-input"
+                            placeholder="e.g., New product launch, industry insights, company news..." 
+                            required 
+                        />
+                    </div>
+                    <button type="submit" class="generate-button" id="generateBtn">
+                        <span id="buttonText">Generate Professional Posts</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div id="resultsContainer" class="results-container">
+            {% if summary %}
+            <div class="result-card summary">
+                <div class="card-header">
+                    <div class="card-title-group">
+                        <div class="card-icon">🧠</div>
+                        <h3 class="card-title">Content Summary</h3>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <p>{{ summary }}</p>
+                </div>
+                <div class="card-actions">
+                    <button class="copy-button" onclick="copyToClipboard('{{ summary }}', this)">
+                        Copy Summary
+                    </button>
+                </div>
+            </div>
+
+            <div class="result-card facebook">
+                <div class="card-header">
+                    <div class="card-title-group">
+                        <div class="card-icon">📘</div>
+                        <h3 class="card-title">Facebook Post</h3>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <p>{{ fb }}</p>
+                </div>
+                <div class="card-actions">
+                    <button class="copy-button" onclick="copyToClipboard('{{ fb }}', this)">
+                        Copy Facebook Post
+                    </button>
+                </div>
+            </div>
+
+            <div class="result-card linkedin">
+                <div class="card-header">
+                    <div class="card-title-group">
+                        <div class="card-icon">💼</div>
+                        <h3 class="card-title">LinkedIn Post</h3>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <p>{{ linkedin }}</p>
+                </div>
+                <div class="card-actions">
+                    <button class="copy-button" onclick="copyToClipboard('{{ linkedin }}', this)">
+                        Copy LinkedIn Post
+                    </button>
+                </div>
+            </div>
+
+            <div class="result-card twitter">
+                <div class="card-header">
+                    <div class="card-title-group">
+                        <div class="card-icon">🐦</div>
+                        <h3 class="card-title">Twitter Post</h3>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <p>{{ twitter }}</p>
+                </div>
+                <div class="card-actions">
+                    <button class="copy-button" onclick="copyToClipboard('{{ twitter }}', this)">
+                        Copy Twitter Post
+                    </button>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <div id="loadingState" class="loading-state" style="display: none;">
+            <div class="loading-spinner"></div>
+            <p>Generating professional content for all platforms...</p>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="#" class="footer-link">Privacy Policy</a>
+            <a href="#" class="footer-link">Terms of Service</a>
+            <a href="#" class="footer-link">API Documentation</a>
+            <a href="#" class="footer-link">Support</a>
+        </div>
+        <p>&copy; 2025 PostCraft Pro. All rights reserved. | Powered by Advanced AI Technology</p>
+    </footer>
+
+    <script>
+        let isGenerating = false;
+
+        function copyToClipboard(text, button) {
+            const cleanText = text.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'");
+            
+            navigator.clipboard.writeText(cleanText)
+                .then(() => {
+                    const originalText = button.textContent;
+                    button.textContent = 'Copied!';
+                    button.classList.add('success');
+                    
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                        button.classList.remove('success');
+                    }, 2000);
+                })
+                .catch(err => {
+                    console.error('Failed to copy: ', err);
+                    button.textContent = 'Copy failed';
+                    setTimeout(() => {
+                        button.textContent = 'Copy';
+                    }, 2000);
+                });
+        }
+
+        document.getElementById('contentForm').addEventListener('submit', function(e) {
+            if (isGenerating) return;
+            
+            isGenerating = true;
+            const btn = document.getElementById('generateBtn');
+            const buttonText = document.getElementById('buttonText');
+            
+            // Show loading state
+            showLoading();
+            buttonText.textContent = 'Generating...';
+            btn.disabled = true;
+            
+            // Form will submit to your backend
+            // The backend should handle the response and populate the template variables
+        });
+
+        // Add smooth scrolling to results
+        function scrollToResults() {
+            setTimeout(() => {
+                const resultsContainer = document.getElementById('resultsContainer');
+                if (resultsContainer.style.display !== 'none') {
+                    resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 100);
+        }
+
+        // Add intersection observer for animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe stat cards for animation
+        document.addEventListener('DOMContentLoaded', () => {
+            const statCards = document.querySelectorAll('.stat-card');
+            statCards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>
