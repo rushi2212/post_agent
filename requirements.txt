@@ -1,4 +1,4 @@
 flask
-tavily
+git+https://github.com/tavilyhq/tavily-python.git
 google-generativeai
 python-dotenv  
