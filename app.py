@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request
-from tavily import TavilyClient
 from google import genai
 import requests
 import os
