@@ -1,4 +1,4 @@
 flask
 google-generativeai
 python-dotenv  
-tavily==0.1.6
+requests

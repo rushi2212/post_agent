@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 from tavily import TavilyClient
 from google import genai
+import requests
 import os
 
 from dotenv import load_dotenv
@@ -17,15 +18,26 @@ gemini_api_key = os.getenv("GEMINI_API_KEY")
 genai_client = genai.Client(api_key=gemini_api_key)
 
 # Tavily Web Search
+import requests
+import os
+
 def web_search(question):
-    tavily_client = TavilyClient(tavily_api_key)
-    trimmed_query = question[:400]  # Tavily's limit
-    response = tavily_client.search(query=trimmed_query, max_results=10)
-    results = response.get('results', [])
+    trimmed_query = question[:400]  # Tavily's query limit
+    headers = {
+        "Authorization": f"Bearer {os.getenv('TAVILY_API_KEY')}",
+        "Content-Type": "application/json"
+    }
+    payload = {
+        "query": trimmed_query,
+        "max_results": 10
+    }
+    response = requests.post("https://api.tavily.com/search", json=payload, headers=headers)
+    results = response.json().get('results', [])
     content = ""
     for r in results:
-        content += r['content']
+        content += r.get('content', '')
     return content
+
 
 # Summarizing with Gemini
 def summarizing_agent(user_query):
